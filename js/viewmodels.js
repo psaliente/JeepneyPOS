@@ -26,16 +26,19 @@ define(['knockout', 'models'], function (ko, Models) {
             self.Pasadas = ko.observableArray([]);
             self.Bayads = ko.observableArray([]);
             self.addStop = function (route) {
-                console.log(route);
+                route.RouteStops.push(self.NewStop());
+                self.NewStop(new Models.RouteStop({}));
             };
             self.addRoute = function () {
                 self.Routes.push(self.NewRoute());
                 self.NewRoute(new Models.JeepRoute({}));
+                self.DialogToggle.NewRoute(false);
             };
             self.addJeep = function () {
                 self.NewJeep().RouteID(self.SelectedRoute().RouteID());
                 self.Jeeps.push(self.NewJeep());
                 self.NewJeep(new Models.Jeep({}));
+                self.DialogToggle.NewJeep(false);
             };
             self.addPasada = function () {
                 self.NewPasada().JeepID(self.CurrentJeep().JeepID());
@@ -44,25 +47,26 @@ define(['knockout', 'models'], function (ko, Models) {
                 self.DialogToggle.NewPasada(false);
             };
             self.addBayad = function () {
-                self.NewBayad().PasadaID(self.CurrentPasada().PasadaID());
-                self.NewBayad().Amount(self.getAmount());
-                self.CurrentPasada().Income(self.CurrentPasada().Income() + self.NewBayad().Amount());
+                self.NewBayad().PasadaID(self.NewPasada().PasadaID());
+                self.NewPasada().Income(self.NewPasada().Income() + self.NewBayad().Amount());
+                self.NewPasada().Pax(self.NewPasada().Pax() + 1);
                 self.Bayads.push(self.NewBayad());
                 self.NewBayad(new Models.Bayad({}));
+                self.DialogToggle.NewBayad(false);
             };
             self.getAmount = ko.computed(function () {
-                var _from = self.NewBayad().LoadFrom().ID(),
-                    _to = self.NewBayad().LoadTo().ID(),
+                var _from = self.NewBayad().LoadFrom() ? self.NewBayad().LoadFrom().ID() : 0,
+                    _to = self.NewBayad().LoadTo() ? self.NewBayad().LoadTo().ID() : 0,
                     _multiplier = (_to - _from) * (_to < _from ? -1 : 1);
-                return self.CurrentMatrix.MinimumFare() + self.CurrentMatrix.SucceedingRate() * _multiplier;
+                self.NewBayad().Amount(self.CurrentMatrix.MinimumFare() + self.CurrentMatrix.SucceedingRate() * _multiplier);
             });
             self.lookupRoute = function (routeId) {
-                var _route = new Models.JeepRoute();
-                ko.utils.forEach(self.Routes(), function (route) {
-                    if (route.ID === routeId) {
+                var _route = new Models.JeepRoute({});
+                ko.utils.arrayForEach(self.Routes(), function (route) {
+                    window.console.log(route.RouteName(), route.RouteStops().length);
+                    if (route.RouteID === routeId) {
                         _route = route;
                     }
-                    return false;
                 });
                 return _route;
             };

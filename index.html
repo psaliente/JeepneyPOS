@@ -10,91 +10,118 @@
     <body>
         <div class="row">
             <div id="DashBoardView" class="col-xs-12">
-                <div class="col-xs-12">
-                    <h3>Routes</h3>
-                    <button type="button" data-bind="click: function() { $root.DialogToggle.NewRoute(true); }">Add Route</button>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    Route
-                                </th>
-                                <th>
-                                    Stops
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: $root.Routes">
-                            <tr>
-                                <td>
-                                    <span data-bind="text: ID"></span>
-                                </td>
-                                <td>
-                                    <span data-bind="text: RouteName"></span>
-                                </td>
-                                <td>
-                                    <ul data-bind="foreach: RouteStops">
-                                        <li>
-                                            <span data-bind="text: ID"></span>&nbsp;<span data-bind="text: Name"></span>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div data-bind="ifnot: $root.DialogToggle.NewPasada" class="col-xs-12">
-                    <h3>Jeeps</h3>
-                    <button type="button" data-bind="click: function() { $root.DialogToggle.NewJeep(true); }">Add Jeep</button>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    Plate Number
-                                </th>
-                                <th>
-                                    Passenger Capacity
-                                </th>
-                                <th>
-                                    Route
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: $root.Jeeps">
-                            <tr>
-                                <td>
-                                    <span data-bind="text: ID"></span>
-                                </td>
-                                <td>
-                                    <span data-bind="text: PlateNo"></span>
-                                </td>
-                                <td>
-                                    <span data-bind="text: PaxCapacity"></span>
-                                </td>
-                                <td>
-                                    <span data-bind="text: $root.lookupRoute(RouteID).RouteName"></span>
-                                </td>
-                                <td>
-                                    <button type="button" data-bind="click: $root.startPasada">Start New Pasada</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div data-bind="if: $root.DialogToggle.NewPasada" class="col-xs-12">
-                    <div data-bind="with: $root.NewPasada">
-                        Date:
-                        Plate No:
-                        Driver:
-                        Route:
-
-                        <button type="button" data-bind="click: $root.addPasada()">End Pasada</button>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingRoutes">
+                            <h4 class="panel-title">
+                                <a role="button" href="#routesView" data-toggle="collapse" aria-expanded="false" aria-controls="routesView">
+                                    Routes
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="routesView" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingRoutes">
+                            <div class="panel-body">
+                                <button type="button" data-bind="click: function() { $root.DialogToggle.NewRoute(true); }">Add Route</button>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                ID
+                                            </th>
+                                            <th>
+                                                Route
+                                            </th>
+                                            <th>
+                                                Stops
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: $root.Routes">
+                                        <tr>
+                                            <td>
+                                                <span data-bind="text: RouteID"></span>
+                                            </td>
+                                            <td>
+                                                <span data-bind="text: RouteName"></span>
+                                            </td>
+                                            <td>
+                                                <ul data-bind="foreach: RouteStops">
+                                                    <li>
+                                                        <span data-bind="text: ID"></span>&nbsp;<span data-bind="text: Name"></span>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingJeepney">
+                            <h4 class="panel-title">
+                                <a role="button" href="#jeepneyView" data-toggle="collapse" aria-expanded="false" aria-controls="jeepneyView">
+                                    Jeepney
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="jeepneyView" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingJeepney">
+                            <div class="panel-body">
+                                <div data-bind="visible: !$root.DialogToggle.NewPasada()">
+                                    <button type="button" data-bind="click: function() { $root.DialogToggle.NewJeep(true); }">Add Jeep</button>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    ID
+                                                </th>
+                                                <th>
+                                                    Plate Number
+                                                </th>
+                                                <th>
+                                                    Passenger Capacity
+                                                </th>
+                                                <th>
+                                                    Route
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="foreach: $root.Jeeps">
+                                            <tr>
+                                                <td>
+                                                    <span data-bind="text: JeepID"></span>
+                                                </td>
+                                                <td>
+                                                    <span data-bind="text: PlateNo"></span>
+                                                </td>
+                                                <td>
+                                                    <span data-bind="text: PaxCapacity"></span>
+                                                </td>
+                                                <td>
+                                                    <span data-bind="text: $root.lookupRoute(RouteID).RouteName"></span>
+                                                </td>
+                                                <td>
+                                                    <button type="button" data-bind="click: $root.startPasada">Start New Pasada</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div data-bind="visible: $root.DialogToggle.NewPasada()" class="col-xs-12">
+                                    <div data-bind="with: $root.NewPasada">
+                                        Date: <span data-bind="text: PasadaDate()"></span><br/>
+                                        Plate No: <span data-bind="text: $root.CurrentJeep().PlateNo"></span><br/>
+                                        Driver: <input type="text" data-bind="value: DriverName"/><br/>
+                                        Route: <span data-bind="text: $root.lookupRoute($root.CurrentJeep().RouteID()).RouteName"></span><br/>
+                                        Total Income: <span data-bind="text: Income"></span><br/>
+                                        Pax: <span data-bind="text: Pax"></span><br/>
+                                        <button type="button" data-bind="click: function () { $root.DialogToggle.NewBayad(true); }">Bayad Po</button>
+                                        <br/>
+                                        <button type="button" data-bind="click: $root.addPasada">End Pasada</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div data-bind="dialog: {
@@ -143,7 +170,7 @@
                                 show: 'fade',
                                 hide: 'fade',
                                 width: 400,
-                                height: 400 }, diadlogVisible: $root.DialogToggle.NewRoute">
+                                height: 400 }, dialogVisible: $root.DialogToggle.NewRoute">
                     <div data-bind="with: $root.NewRoute">
                         ID: <input type="text" data-bind="value: RouteID"/><br/>
                         From: <input type="text" data-bind="value: RouteFrom"/><br/>
@@ -154,9 +181,11 @@
                                 <span data-bind="text: ID"></span>&nbsp;<span data-bind="text: Name"></span>
                             </li>
                         </ul>
-                        <div data-bind="with: $root.NewStop">
-                            ID: <input type="text" data-bind="value: ID"/>&nbsp;
-                            Name: <input type="text" data-bind="value: Name" />
+                        <div>
+                            <!-- ko with: $root.NewStop -->
+                                ID: <input type="text" data-bind="value: ID"/>
+                                Name: <input type="text" data-bind="value: Name"/>
+                            <!-- /ko -->
                             <button data-bind="click: $root.addStop">+</button>
                         </div>
                         <button type="button" data-bind="click: $root.addRoute">Add</button>

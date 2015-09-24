@@ -20,5 +20,6 @@ requirejs(['jquery', 'knockout', 'viewmodels', 'tbootstrap', 'polyfill', 'custom
     "use strict";
     var dbvm = new ViewModels.DashBoard();
     window.dbvm = dbvm;
+    window.ko = ko;
     ko.applyBindings(dbvm, document.getElementById("DashBoardView"));
 });
