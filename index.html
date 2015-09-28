@@ -22,7 +22,7 @@
                         <div id="routesView" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingRoutes">
                             <div class="panel-body">
                                 <button type="button" data-bind="click: function() { $root.DialogToggle.NewRoute(true); }">Add Route</button>
-                                <table>
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th>
@@ -69,7 +69,7 @@
                             <div class="panel-body">
                                 <div data-bind="visible: !$root.DialogToggle.NewPasada()">
                                     <button type="button" data-bind="click: function() { $root.DialogToggle.NewJeep(true); }">Add Jeep</button>
-                                    <table>
+                                    <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>
@@ -98,7 +98,7 @@
                                                     <span data-bind="text: PaxCapacity"></span>
                                                 </td>
                                                 <td>
-                                                    <span data-bind="text: $root.lookupRoute(RouteID).RouteName"></span>
+                                                    <span data-bind="text: $root.lookupRoute(RouteID()).RouteName"></span>
                                                 </td>
                                                 <td>
                                                     <button type="button" data-bind="click: $root.startPasada">Start New Pasada</button>
@@ -124,15 +124,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-bind="dialog: {
-                                autoOpen: false,
-                                resizable: false,
-                                modal: true,
-                                title: 'New Bayad',
-                                show: 'fade',
-                                hide: 'fade',
-                                width: 400,
-                                height: 400 }, dialogVisible: $root.DialogToggle.NewBayad">
+                <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Bayad' }, dialogVisible: $root.DialogToggle.NewBayad">
                     <div data-bind="with: $root.NewBayad">
                         ID: <input type="text" data-bind="value: BayadID"/><br/>
                         From: <select data-bind="options: $root.SelectedRoute().RouteStops, value: LoadFrom"></select><br/>
@@ -144,15 +136,7 @@
                         <button type="button" data-bind="click: function() { $root.DialogToggle.NewBayad(false); }">Cancel</button>
                     </div>
                 </div>
-                <div data-bind="dialog: {
-                                autoOpen: false,
-                                resizable: false,
-                                modal: true,
-                                title: 'New Jeep',
-                                show: 'fade',
-                                hide: 'fade',
-                                width: 400,
-                                height: 400 }, dialogVisible: $root.DialogToggle.NewJeep">
+                <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Jeep' }, dialogVisible: $root.DialogToggle.NewJeep">
                     <div data-bind="with: $root.NewJeep">
                         ID: <input type="text" data-bind="value: JeepID"/><br/>
                         Plate No.: <input type="text" data-bind="value: PlateNo"/><br/>
@@ -162,15 +146,7 @@
                         <button type="button" data-bind="click: function() { $root.DialogToggle.NewJeep(false); }">Cancel</button>
                     </div>
                 </div>
-                <div data-bind="dialog: {
-                                autoOpen: false,
-                                resizable: false,
-                                modal: true,
-                                title: 'New Jeep Route',
-                                show: 'fade',
-                                hide: 'fade',
-                                width: 400,
-                                height: 400 }, dialogVisible: $root.DialogToggle.NewRoute">
+                <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Jeep Route' }, dialogVisible: $root.DialogToggle.NewRoute">
                     <div data-bind="with: $root.NewRoute">
                         ID: <input type="text" data-bind="value: RouteID"/><br/>
                         From: <input type="text" data-bind="value: RouteFrom"/><br/>

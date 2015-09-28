@@ -63,8 +63,7 @@ define(['knockout', 'models'], function (ko, Models) {
             self.lookupRoute = function (routeId) {
                 var _route = new Models.JeepRoute({});
                 ko.utils.arrayForEach(self.Routes(), function (route) {
-                    window.console.log(route.RouteName(), route.RouteStops().length);
-                    if (route.RouteID === routeId) {
+                    if (route.RouteID() === routeId) {
                         _route = route;
                     }
                 });

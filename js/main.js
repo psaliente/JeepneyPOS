@@ -8,7 +8,8 @@ requirejs.config({
         knockout: 'knockout-3.3.0',
         models: 'models',
         viewmodels: 'viewmodels',
-        custombindings: 'custombindings'
+        custombindings: 'custombindings',
+        extensions: 'ko.extensions'
     },
     shim: {
         tbootstrap: {
@@ -16,7 +17,7 @@ requirejs.config({
         }
     }
 });
-requirejs(['jquery', 'knockout', 'viewmodels', 'tbootstrap', 'polyfill', 'custombindings', 'jqueryui', 'domReady!'], function ($, ko, ViewModels) {
+requirejs(['jquery', 'knockout', 'viewmodels', 'tbootstrap', 'polyfill', 'custombindings', 'extensions', 'jqueryui', 'domReady!'], function ($, ko, ViewModels) {
     "use strict";
     var dbvm = new ViewModels.DashBoard();
     window.dbvm = dbvm;
