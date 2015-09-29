@@ -1,29 +1,14 @@
-#errorFields
+.error-field
 {
     border-color: #990000;
 }
 
-#onFocus
+.error-message
+{
+    color: #ff0000;
+}
+
+.on-focus
 {
     border-color: #009900;
-}
-
-style1
-{
-    height: 54px;
-}
-
-#RequestForm
-{
-    padding: 10px;
-}
-
-.style2
-{
-    height: 52px;
-}
-
-.CebuLogo
-{
-    margin:0 auto;
 }

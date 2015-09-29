@@ -8,67 +8,43 @@
         <link rel="stylesheet" href="css/styles.css"/>
     </head>
     <body>
-        <div class="row">
-            <div id="DashBoardView" class="col-xs-12">
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingRoutes">
-                            <h4 class="panel-title">
-                                <a role="button" href="#routesView" data-toggle="collapse" aria-expanded="false" aria-controls="routesView">
-                                    Routes
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="routesView" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingRoutes">
-                            <div class="panel-body">
-                                <button type="button" data-bind="click: function() { $root.DialogToggle.NewRoute(true); }">Add Route</button>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                ID
-                                            </th>
-                                            <th>
-                                                Route
-                                            </th>
-                                            <th>
-                                                Stops
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody data-bind="foreach: $root.Routes">
-                                        <tr>
-                                            <td>
-                                                <span data-bind="text: RouteID"></span>
-                                            </td>
-                                            <td>
-                                                <span data-bind="text: RouteName"></span>
-                                            </td>
-                                            <td>
-                                                <ul data-bind="foreach: RouteStops">
-                                                    <li>
-                                                        <span data-bind="text: ID"></span>&nbsp;<span data-bind="text: Name"></span>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+        <div class="container">
+            <div class="row">
+                <div id="DashBoardView" class="col-xs-12">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingMatrix">
+                                <h4 class="panel-title">
+                                    <a role="button" href="#matrixView" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="matrixView">
+                                        Fare Matrix Setup
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="matrixView" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingMatrix">
+                                <div class="panel-body">
+                                    <div class="col-xs-12" data-bind="with: $root.CurrentMatrix">
+                                        ID: <span data-bind="text: MatrixID"></span><br/>
+                                        Minimum Distance(km): <input type="text" data-bind="value: MinimumDistance"/>
+                                        <span class="error-message" data-bind="text: MinimumDistance.errorMessage"></span><br/>
+                                        Minimum Fare: <input type="text" data-bind="value: MinimumFare"/>
+                                        <span class="error-message" data-bind="text: MinimumFare.errorMessage"></span><br/>
+                                        Succeeding Rate: <input type="text" data-bind="value: SucceedingRate"/>
+                                        <span class="error-message" data-bind="text: SucceedingRate.errorMessage"></span><br/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingJeepney">
-                            <h4 class="panel-title">
-                                <a role="button" href="#jeepneyView" data-toggle="collapse" aria-expanded="false" aria-controls="jeepneyView">
-                                    Jeepney
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="jeepneyView" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingJeepney">
-                            <div class="panel-body">
-                                <div data-bind="visible: !$root.DialogToggle.NewPasada()">
-                                    <button type="button" data-bind="click: function() { $root.DialogToggle.NewJeep(true); }">Add Jeep</button>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingRoutes">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" href="#routesView" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="routesView">
+                                        Routes
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="routesView" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingRoutes">
+                                <div class="panel-body">
+                                    <button type="button" data-bind="click: function() { $root.DialogToggle.NewRoute(true); }">Add Route</button>
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -76,96 +52,154 @@
                                                     ID
                                                 </th>
                                                 <th>
-                                                    Plate Number
-                                                </th>
-                                                <th>
-                                                    Passenger Capacity
-                                                </th>
-                                                <th>
                                                     Route
+                                                </th>
+                                                <th>
+                                                    Stops
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody data-bind="foreach: $root.Jeeps">
+                                        <tbody data-bind="foreach: $root.Routes">
                                             <tr>
                                                 <td>
-                                                    <span data-bind="text: JeepID"></span>
+                                                    <span data-bind="text: RouteID"></span>
                                                 </td>
                                                 <td>
-                                                    <span data-bind="text: PlateNo"></span>
+                                                    <span data-bind="text: RouteName"></span>
                                                 </td>
                                                 <td>
-                                                    <span data-bind="text: PaxCapacity"></span>
-                                                </td>
-                                                <td>
-                                                    <span data-bind="text: $root.lookupRoute(RouteID()).RouteName"></span>
-                                                </td>
-                                                <td>
-                                                    <button type="button" data-bind="click: $root.startPasada">Start New Pasada</button>
+                                                    <ul data-bind="foreach: RouteStops">
+                                                        <li>
+                                                            <span data-bind="text: ID"></span>&nbsp;<span data-bind="text: Name"></span>
+                                                        </li>
+                                                    </ul>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div data-bind="visible: $root.DialogToggle.NewPasada()" class="col-xs-12">
-                                    <div data-bind="with: $root.NewPasada">
-                                        Date: <span data-bind="text: PasadaDate()"></span><br/>
-                                        Plate No: <span data-bind="text: $root.CurrentJeep().PlateNo"></span><br/>
-                                        Driver: <input type="text" data-bind="value: DriverName"/><br/>
-                                        Route: <span data-bind="text: $root.lookupRoute($root.CurrentJeep().RouteID()).RouteName"></span><br/>
-                                        Total Income: <span data-bind="text: Income"></span><br/>
-                                        Pax: <span data-bind="text: Pax"></span><br/>
-                                        <button type="button" data-bind="click: function () { $root.DialogToggle.NewBayad(true); }">Bayad Po</button>
-                                        <br/>
-                                        <button type="button" data-bind="click: $root.addPasada">End Pasada</button>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingJeepney">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" href="#jeepneyView" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="jeepneyView">
+                                        Jeepney
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="jeepneyView" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingJeepney">
+                                <div class="panel-body">
+                                    <div data-bind="visible: !$root.DialogToggle.NewPasada()">
+                                        <button type="button" data-bind="click: function() { $root.DialogToggle.NewJeep(true); }">Add Jeep</button>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        ID
+                                                    </th>
+                                                    <th>
+                                                        Plate Number
+                                                    </th>
+                                                    <th>
+                                                        Passenger Capacity
+                                                    </th>
+                                                    <th>
+                                                        Route
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-bind="foreach: $root.Jeeps">
+                                                <tr>
+                                                    <td>
+                                                        <span data-bind="text: JeepID"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span data-bind="text: PlateNo"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span data-bind="text: PaxCapacity"></span>
+                                                    </td>
+                                                    <td>
+                                                        <span data-bind="text: $root.lookupRoute(RouteID()).RouteName"></span>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" data-bind="click: $root.startPasada">Start New Pasada</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div data-bind="visible: $root.DialogToggle.NewPasada()" class="col-xs-12">
+                                        <div data-bind="with: $root.NewPasada">
+                                            Date: <span data-bind="text: PasadaDate()"></span><br/>
+                                            Plate No: <span data-bind="text: $root.CurrentJeep().PlateNo"></span><br/>
+                                            Driver: <input type="text" data-bind="value: DriverName"/>
+                                            <span class="error-message" data-bind="text: DriverName.errorMessage"></span><br/>
+                                            Route: <span data-bind="text: $root.lookupRoute($root.CurrentJeep().RouteID()).RouteName"></span><br/>
+                                            Total Income: <span data-bind="text: Income"></span><br/>
+                                            Pax: <span data-bind="text: Pax"></span><br/>
+                                            <button type="button" data-bind="click: function () { $root.DialogToggle.NewBayad(true); }">Bayad Po</button>
+                                            <br/>
+                                            <button type="button" data-bind="click: $root.addPasada">End Pasada</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Bayad' }, dialogVisible: $root.DialogToggle.NewBayad">
-                    <div data-bind="with: $root.NewBayad">
-                        ID: <input type="text" data-bind="value: BayadID"/><br/>
-                        From: <select data-bind="options: $root.SelectedRoute().RouteStops, value: LoadFrom"></select><br/>
-                        To: <select data-bind="options: $root.SelectedRoute().RouteStops, value: LoadTo"></select><br/>
-                        Amount: <span data-bind="text: Amount"></span><br/>
-                        Tendered: <input type="text" data-bind="value: Tendered"/><br/>
-                        Change: <span data-bind="text: Change"></span><br/>
-                        <button type="button" data-bind="click: $root.addBayad">Add</button>
-                        <button type="button" data-bind="click: function() { $root.DialogToggle.NewBayad(false); }">Cancel</button>
-                    </div>
-                </div>
-                <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Jeep' }, dialogVisible: $root.DialogToggle.NewJeep">
-                    <div data-bind="with: $root.NewJeep">
-                        ID: <input type="text" data-bind="value: JeepID"/><br/>
-                        Plate No.: <input type="text" data-bind="value: PlateNo"/><br/>
-                        Passenger Capacity: <input type="text" data-bind="value: PaxCapacity"/><br/>
-                        Route: <select data-bind="options: $root.Routes, optionsText: 'RouteName', optionsValue: 'RouteID', value: RouteID"></select><br/>
-                        <button type="button" data-bind="click: $root.addJeep">Add</button>
-                        <button type="button" data-bind="click: function() { $root.DialogToggle.NewJeep(false); }">Cancel</button>
-                    </div>
-                </div>
-                <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Jeep Route' }, dialogVisible: $root.DialogToggle.NewRoute">
-                    <div data-bind="with: $root.NewRoute">
-                        ID: <input type="text" data-bind="value: RouteID"/><br/>
-                        From: <input type="text" data-bind="value: RouteFrom"/><br/>
-                        To: <input type="text" data-bind="value: RouteTo"/><br/>
-                        Stops:
-                        <ul data-bind="foreach: RouteStops">
-                            <li>
-                                <span data-bind="text: ID"></span>&nbsp;<span data-bind="text: Name"></span>
-                            </li>
-                        </ul>
-                        <div>
-                            <!-- ko with: $root.NewStop -->
-                                ID: <input type="text" data-bind="value: ID"/>
-                                Name: <input type="text" data-bind="value: Name"/>
-                            <!-- /ko -->
-                            <button data-bind="click: $root.addStop">+</button>
+                    <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Bayad', height: 400 }, dialogVisible: $root.DialogToggle.NewBayad">
+                        <div data-bind="with: $root.NewBayad">
+                            ID: <input type="text" data-bind="value: BayadID"/><br/>
+                            From: <select data-bind="options: $root.SelectedRoute().RouteStops, optionsText: 'Name', optionsValue: $data, value: LoadFrom"></select>
+                            <span class="error-message" data-bind="text: LoadFrom.errorMessage"></span><br/>
+                            To: <select data-bind="options: $root.SelectedRoute().RouteStops, optionsText: 'Name', optionsValue: $data, value: LoadTo"></select><br/>
+                            Amount: <span data-bind="text: Amount"></span><br/>
+                            Tendered: <input type="text" data-bind="textInput: Tendered"/><br/>
+                            Change: <span data-bind="text: Change"></span><br/>
+                            <button type="button" data-bind="click: $root.addBayad">Add</button>
+                            <button type="button" data-bind="click: function() { $root.DialogToggle.NewBayad(false); }">Cancel</button>
                         </div>
-                        <button type="button" data-bind="click: $root.addRoute">Add</button>
-                        <button type="button" data-bind="click: function() { $root.DialogToggle.NewRoute(false); }">Cancel</button>
+                    </div>
+                    <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Jeep', height: 400 }, dialogVisible: $root.DialogToggle.NewJeep">
+                        <div data-bind="with: $root.NewJeep">
+                            ID: <input type="text" data-bind="value: JeepID"/><br/>
+                            Plate No.: <input type="text" data-bind="value: PlateNo"/>
+                            <span class="error-message" data-bind="text: PlateNo.errorMessage"></span><br/>
+                            Passenger Capacity: <input type="text" data-bind="value: PaxCapacity"/>
+                            <span class="error-message" data-bind="text: PaxCapacity.errorMessage"></span><br/>
+                            Route: <select data-bind="options: $root.Routes, optionsText: 'RouteName', optionsValue: 'RouteID', value: RouteID"></select>
+                            <span class="error-message" data-bind="text: RouteID.errorMessage"></span><br/>
+                            <button type="button" data-bind="click: $root.addJeep">Add</button>
+                            <button type="button" data-bind="click: function() { $root.DialogToggle.NewJeep(false); }">Cancel</button>
+                        </div>
+                    </div>
+                    <div data-bind="dialog: { autoOpen: false, resizable: false, modal: true, title: 'New Jeep Route', height: 400 }, dialogVisible: $root.DialogToggle.NewRoute">
+                        <div data-bind="with: $root.NewRoute">
+                            ID: <input type="text" data-bind="value: RouteID"/><br/>
+                            From: <input type="text" data-bind="value: RouteFrom"/>
+                            <span class="error-message" data-bind="text: RouteFrom.errorMessage"></span><br/>
+                            To: <input type="text" data-bind="value: RouteTo"/>
+                            <span class="error-message" data-bind="text: RouteTo.errorMessage"></span><br/>
+                            Stops:
+                            <ul data-bind="foreach: RouteStops">
+                                <li>
+                                    <span data-bind="text: ID"></span>&nbsp;<span data-bind="text: Name"></span>
+                                </li>
+                            </ul>
+                            <span class="error-message" data-bind="text: RouteStops.errorMessage"></span>
+                            <div>
+                                <!-- ko with: $root.NewStop -->
+                                    ID: <input type="text" data-bind="value: ID"/>
+                                    Name: <input type="text" data-bind="value: Name"/>
+                                    <span class="error-message" data-bind="text: Name.errorMessage"></span>
+                                    Distance(km): <input type="text" data-bind="value: Distance"/>
+                                <!-- /ko -->
+                                <button data-bind="click: $root.addStop">+</button>
+                            </div>
+                            <button type="button" data-bind="click: $root.addRoute">Add</button>
+                            <button type="button" data-bind="click: function() { $root.DialogToggle.NewRoute(false); }">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
